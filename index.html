@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Extract depth maps</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+        <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <style>
+            body {
+                font-family: 'Raleway', sans-serif;
+                margin: 0;
+            }
+
+            header {
+                position: -webkit-sticky;
+                position: sticky;
+                top: 0;
+                padding: 1.6rem 3rem;
+                background-color: aquamarine;
+                background-image: linear-gradient(to left, #7FFFE9, #7fffb8);
+                transform: skewY(-4deg);
+                box-shadow: 35px 38px 84px -23px rgba(0,0,0,0.38);
+                opacity: 1;
+                transition: all 0.5s ease-in-out;
+                z-index: 1;
+            }
+
+            #images {
+                margin-top: 1em;
+            }
+
+            #images img {
+                opacity: 0;
+                display: block;
+                position: static;
+                z-index: 0;
+                margin: 1em auto;
+                width: 80%;
+                transition: opacity 700ms;
+            }
+
+            .add-button-large {
+                border: 1px solid;
+                cursor: pointer;
+                border-color: #555;
+                display: inline-block;
+                border-radius: 4px;
+                padding: 0.8em;
+                padding-left: 1.6em;
+                padding-right: 1.6em;
+                color: #333;
+                background: #83ffd5;
+            }
+
+            .add-button-small {
+                cursor: pointer;
+                line-height: 56px;
+                position: fixed;
+                bottom: 1.6em;
+                right: 1.6em;
+                border-radius: 999px;
+                background-color: aquamarine;
+                height: 3em;
+                width: 3em;
+                box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+                transition: all 0.25s ease-in-out;
+            }
+
+            .add-button-small::after, .add-button-small::before {
+                content: "";
+                display: block;
+                background-color: #7c7373;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            .add-button-small::before {
+                height: 1em;
+                width: 0.15em;
+            }
+
+            .add-button-small::after {
+                height: 0.15em;
+                width: 1em;
+            }
+
+            input[type="file"] {
+                display: none;
+            }
+
+            @media (max-width: 599px) {
+                .add-button-large {
+                    display: none;
+                }
+
+                .header-container {
+                    padding: 1rem 1rem;
+                }
+
+                h1 {
+                    font-size: 1.4rem;
+                }
+            }
+
+            @media (min-width: 600px) {
+                .add-button-small {
+                    display: none;
+                }
+            }
+
+            .zen-mode header {
+                top: -15em;
+                margin-top: -15em;
+                opacity: 0;
+            }
+
+            .zen-mode .add-button-small {
+                transform: translateY(200%);
+            }
+
+            .error {
+                position: fixed;
+                left: 20%;
+                right: 20%;
+                bottom: -40%;
+                padding: 0.8rem;
+                background: #ff9b00f0;
+                box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+                transition: all 0.25s ease-in-out;
+                text-align: center;
+                font-weight: 400;
+                zoom: 1%; }
+
+            .error.show {
+                bottom: 20%;
+                zoom: 100%; }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>Extract depth maps</h1>
+            <p>Extract embedded depth maps from photos taken in <b>portrait/bokeh</b> mode.</p>
+            <p>Supported models: iPhone 8 Plus, iPhone X, and iPhone XSMax</p>
+            <label for="imageUpload">
+                <p class="add-button-large">Upload photo</p>
+                <input type="file" id="imageUpload" style="display: none;" name="imageUpload" accept="image/jpeg" multiple="multiple"/>
+            </label>
+        </header>
+        <div id="images">
+            <img id="samplePhoto" src="assets/340_AppleiPhoneXSMax_IMG_E7156.jpg">
+        </div>
+        <div class="error"></div>
+        <label for="imageUpload" class="add-button-small">
+            <input type="file" id="imageUpload" name="imageUpload" accept="image/jpeg"/>
+        </label>
+        <script src="MPFExtractor.js"></script>
+        <script>
+"use strict";
+
+window.addEventListener("load", init);
+
+function init() {
+  const query = document.querySelector.bind(document);
+
+  // MPFExtractor (Multi Picture Format Extractor)
+  const extractor = new MPFExtractor();
+  const options = {
+    debug: false,
+    extractFII: true
+  };
+
+  // For img tags, js cannot immediately access binary data for security reasons.
+  // We have to re-fetch it. However, it will be served from browser cache.
+  fetch(query("#samplePhoto").src)
+    .then(response => response.arrayBuffer())
+    .then(buffer => {
+      return extractor.extract(buffer, options);
+    })
+    .then(subImageArray => {
+      query("#images").innerHTML = "";
+      setImages(subImageArray);
+    })
+    .catch(setError);
+
+  function onUpload(e) {
+    query("#images").innerHTML = "";
+    for (const file of e.target.files) {
+      let reader = new FileReader();
+      reader.onload = () =>
+        extractor
+          .extract(reader.result, { extractFII: true })
+          .then(setImages)
+          .catch(setError);
+      reader.readAsArrayBuffer(file);
+    }
+  }
+
+  function setImages(images) {
+    const imagesElem = query("#images");
+    for (const img of images.reverse()) {
+      imagesElem.insertBefore(img, imagesElem.firstChild);
+      img.onload = () => (img.style.opacity = 1);
+    }
+  }
+
+  function setError(message) {
+    let error = query(".error");
+    error.innerText = `🤔 Error: ${message}`;
+    error.classList.add("show");
+    setTimeout(() => {
+      error.classList.remove("show");
+    }, 3000);
+  }
+
+  query("#imageUpload").addEventListener("change", onUpload, false);
+  query("#images").addEventListener(
+    "click",
+    e => {
+      query("body").classList.toggle("zen-mode");
+    },
+    false
+  );
+}
+        </script>
+    </body>
+</html>
