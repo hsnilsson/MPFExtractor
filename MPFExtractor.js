@@ -64,18 +64,18 @@
 
             const formatPt = offset + 4;
             /*
-             * 	Structure of the MP Format Identifier
+             *  Structure of the MP Format Identifier
              *
-             * 	Offset Addr.  | Code (Hex)  | Description
-             * 	+00				ff			Marker Prefix 	 	<-- offset
-             * 	+01				e2 			APP2
-             * 	+02				#n			APP2 Field Length
-             * 	+03				#n			APP2 Field Length
-             * 	+04				4d 			'M'					<-- formatPt
-             * 	+05				50 			'P'
-             * 	+06				46 			'F'
-             * 	+07				00 			NULL
-             *													<-- tiffOffset
+             *  Offset Addr.  | Code (Hex)  | Description
+             *  +00             ff            Marker Prefix      <-- offset
+             *  +01             e2            APP2
+             *  +02             #n            APP2 Field Length
+             *  +03             #n            APP2 Field Length
+             *  +04             4d            'M'                <-- formatPt
+             *  +05             50            'P'
+             *  +06             46            'F'
+             *  +07             00            NULL
+             *                                                   <-- tiffOffset
              */
             if (dataView.getUint32(formatPt) == 0x4d504600) {
               // Found MPF tag, so we start dig out sub images
