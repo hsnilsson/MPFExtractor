@@ -1,6 +1,6 @@
 # MPF Extractor (Multi Picture Format Extractor)
 
-Extracts images stored in images based on the [MPF format](http://www.cipa.jp/std/documents/e/DC-007_E.pdf)
+Extracts images stored in images based on the [MPF format](http://www.cipa.jp/std/documents/e/DC-007_E.pdf).
 For example iPhone 8 Plus, X, and XSMax stores depth information in portrait/bokeh mode as grayscale images called depthmaps inside the original images. What gives? Well, especially depthmaps can be fun because those can also be used to view a photo in 3D! Or 2.5D rather... Try upload one along the original image on Facebook and it'll automatically convert it to a 3D photo! Or try it out in [depthy.me](depthy.me)!
 
 ## Installation
