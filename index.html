@@ -29,6 +29,33 @@
                 z-index: 1;
             }
 
+            .dashboard {
+                display: flex;
+            }
+
+            .github-link {
+                cursor: pointer;
+                margin: 1em;
+                margin-left: 2em;
+                text-decoration: none;
+                display: flex;
+                align-items: center;
+                align-self: flex-end;
+            }
+
+            .github-link img {
+                width: 3em;
+                height: 3em;
+            }
+
+            .github-link div {
+                display: inline-block;
+                vertical-align: top;
+                width: 5em;
+                font-size: 13px;
+                margin-left: 0.5em;
+            }
+
             #images {
                 margin-top: 1em;
             }
@@ -99,12 +126,23 @@
                     display: none;
                 }
 
+                .dashboard {
+                    justify-content: flex-end;
+                    position: relative;
+                    left: 2em;
+                }
+
                 .header-container {
                     padding: 1rem 1rem;
                 }
 
                 h1 {
                     font-size: 1.4rem;
+                }
+
+                .github-link {
+                    margin: 0;
+                    margin-bottom: 1em;
                 }
             }
 
@@ -118,7 +156,7 @@
                 top: -15em;
                 margin-top: -15em;
                 opacity: 0;
-            }
+            }            
 
             .zen-mode .add-button-small {
                 transform: translateY(200%);
@@ -143,18 +181,23 @@
         </style>
     </head>
     <body>
-        <header>
-            <h1>Extract depth maps</h1>
-            <p>Extract embedded depth maps from photos taken in <b>portrait/bokeh</b> mode.</p>
-            <p>Supported models: iPhone 8 Plus, iPhone X, and iPhone XSMax</p>
-            <label for="imageUpload">
-                <p class="add-button-large">Upload photo</p>
-                <input type="file" id="imageUpload" style="display: none;" name="imageUpload" accept="image/jpeg" multiple="multiple"/>
-            </label>
-        </header>
-        <div id="images">
-            <img id="samplePhoto" src="assets/340_AppleiPhoneXSMax_IMG_E7156.jpg">
+      <header>
+        <h1>Extract depth maps</h1>
+        <p>Extract embedded depth maps from photos taken in <b>portrait/bokeh</b> mode.</p>
+        <p>Supported models: iPhone 8 Plus, iPhone X, and iPhone XSMax</p>
+        <div class="dashboard">
+          <label for="imageUpload">
+            <p class="add-button-large">Upload photo</p>
+            <input type="file" id="imageUpload" style="display: none;" name="imageUpload" accept="image/jpeg" multiple="multiple">
+          </label>
+          <a href="https://github.com/henchies/MPFExtractor" class="github-link">
+            <img src="assets/GitHub-Mark-120px-plus.png"><div>Info and code on GitHub</div>
+          </a>
         </div>
+      </header>
+      <div id="images">
+        <img id="samplePhoto" src="assets/340_AppleiPhoneXSMax_IMG_E7156.jpg">
+      </div>
         <div class="error"></div>
         <label for="imageUpload" class="add-button-small">
             <input type="file" id="imageUpload" name="imageUpload" accept="image/jpeg"/>
