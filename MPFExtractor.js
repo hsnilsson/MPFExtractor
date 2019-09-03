@@ -4,7 +4,7 @@
   /*
    * MPF Extractor (Multi Picture Format Extractor)
    * By Henrik S Nilsson 2019
-   * Extracts images stored in images based on the MPF format (http://www.cipa.jp/std/documents/e/DC-007_E.pdf)
+   * Extracts images stored in images based on the MPF format (http://www.cipa.jp/std/documents/e/DC-007_E.pdf copy in this repo: assets/DC-007_E.pdf)
    * Overly commented, and without intention of being complete or production ready.
    * Created to extract depth maps from iPhone images, and to learn about image metadata.
    * Kudos to: Phil Harvey (exiftool), Jaume Sanchez (android-lens-blur-depth-extractor)
