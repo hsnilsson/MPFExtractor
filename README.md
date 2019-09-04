@@ -45,6 +45,9 @@ As below, create an `extractor`, set options if needed, and call `extractor.extr
   ...
 ```
 
+### Demo
+Hopefully still hosted on [hsnilsson.com/mpfextractor](https://hsnilsson.com/mpfextractor) or [mpfextractor.netlify.com](https://mpfextractor.netlify.com).
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
