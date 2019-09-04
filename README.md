@@ -1,7 +1,14 @@
 # MPF Extractor (Multi-Picture Format Extractor)
 
-Extracts images stored in images based on the [MPF format](assets/DC-007_E.pdf).
-For example iPhone 8 Plus, X, and XSMax stores depth information in portrait/bokeh mode as grayscale images called depthmaps inside the original images. What gives? Well, especially depthmaps can be fun because those can also be used to view a photo in 3D! Or 2.5D rather... Try upload one along the original image on Facebook and it'll automatically convert it to a 3D photo! Or try it out in [depthy.me](http://depthy.me)!
+Extracts multiple images stored in on image file based on the [MPF format](assets/DC-007_E.pdf).
+
+For example iPhone 8 Plus, X, and XSMax stores depth information in portrait/bokeh mode as grayscale images called depthmaps inside the original image files. What gives? Well, especially depthmaps can be fun because those can also be used to view a photo in 3D!
+
+So if you have the depthmap, how can you view the photo in 3D? Try upload one along the original image on Facebook and it'll automatically convert it to a 3D photo! Or try it out in [depthy.me](http://depthy.me)!
+
+The images are stored inside an image file as in shown in Figure 1:
+
+<img src="assets/Individual images overview.png">
 
 ## Installation
 
@@ -9,9 +16,9 @@ Include MPFExtractor.js in your html file or import as a module.
 
 ## Usage
 
-See example in `index.html` how this is run. Use either on existing img tags or uploaded files.
+(Also see examples in `index.html` how to use the extractor: Either on HTML `<img>` elements, or on uploaded files.)
 
-Basically, create an `extractor` and call `extract(arrayBuffer, options)` on it with an `arrayBuffer` and an optional `options` object.
+As below, create an `extractor`, set options if needed, and call `extractor.extract(arrayBuffer, options)` with an `arrayBuffer` representing the MPF image file.
 
 `extract()` returns a promise which will resolve to an array of [img elements](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img) or reject with an error message.
 
