@@ -167,6 +167,8 @@
                     imageUrl = URL.createObjectURL(imageBlob);
                   image.img = document.createElement("img");
                   image.img.src = imageUrl;
+                  img.crossOrigin = "anonymous";
+  
                   imgs.push(image.img);
                 }
                 resolve(imgs);
