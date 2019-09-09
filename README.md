@@ -10,11 +10,10 @@ The images are stored inside an image file as in shown in Figure 1:
 
 <img src="assets/Individual images overview.png">
 
-## Installation
-
-Include MPFExtractor.js in your html file or import as a module.
 
 ## Usage
+
+Include MPFExtractor.js in your html file or import as a module.
 
 (Also see examples in `index.html` how to use the extractor: Either on HTML `<img>` elements, or on uploaded files.)
 
