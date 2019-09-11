@@ -209,7 +209,11 @@
         <script type="text/javascript">
 "use strict";
 
-window.addEventListener("load", init);
+window.addEventListener("load", callInit);
+
+function callInit() {
+  setTimeout(init, 0);
+}
 
 function init() {
   const query = document.querySelector.bind(document);
