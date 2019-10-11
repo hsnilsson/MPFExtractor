@@ -1,6 +1,6 @@
 # MPF Extractor (Multi-Picture Format Extractor)
 
-Extracts multiple images stored in on image file based on the [MPF format](assets/DC-007_E.pdf).
+Extracts multiple images (such as iPhone depthmaps) stored in single image files of the [MPF format](assets/DC-007_E.pdf).
 
 ### Demo
 
