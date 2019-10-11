@@ -4,7 +4,7 @@ Extracts multiple images (such as iPhone depthmaps) stored in single image files
 
 ### Demo
 
-Hopefully still hosted on [hsnilsson.com/mpfextractor](https://hsnilsson.com/mpfextractor) or [mpfextractor.netlify.com](https://mpfextractor.netlify.com).
+Hopefully still hosted on [hsnilsson.com/mpfextractor/](https://hsnilsson.com/mpfextractor/) or [mpfextractor.netlify.com](https://mpfextractor.netlify.com).
 
 ### Overview
 
