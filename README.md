@@ -2,6 +2,12 @@
 
 Extracts multiple images stored in on image file based on the [MPF format](assets/DC-007_E.pdf).
 
+### Demo
+
+Hopefully still hosted on [hsnilsson.com/mpfextractor](https://hsnilsson.com/mpfextractor) or [mpfextractor.netlify.com](https://mpfextractor.netlify.com).
+
+### Overview
+
 For example iPhone 8 Plus, X, and XSMax stores depth information in portrait/bokeh mode as grayscale images called depthmaps inside the original image files. What gives? Well, especially depthmaps can be fun because those can also be used to view a photo in 3D!
 
 So if you have the depthmap, how can you view the photo in 3D? Try upload one along the original image on Facebook and it'll automatically convert it to a 3D photo! Or try it out in [depthy.me](http://depthy.me)!
@@ -43,9 +49,6 @@ As below, create an `extractor`, set options if needed, and call `extractor.extr
 
   ...
 ```
-
-### Demo
-Hopefully still hosted on [hsnilsson.com/mpfextractor](https://hsnilsson.com/mpfextractor) or [mpfextractor.netlify.com](https://mpfextractor.netlify.com).
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
