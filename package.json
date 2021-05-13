@@ -5,5 +5,17 @@
   "main": "MPFExtractor.js",
   "repository": "https://github.com/hsnilsson/MPFExtractor.git",
   "author": "henrik@hsnilsson.com",
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hsnilsson/MPFExtractor/issues"
+  },
+  "scripts": {
+    "dev": "browser-sync start --server --files **/*.html, **/*.js' --directory --port 1212  --https 'true'",
+    "dev:lws": "local-web-server --https",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.26.14",
+    "local-web-server": "^4.2.1"
+  }
 }
