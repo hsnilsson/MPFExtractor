@@ -1,0 +1,9 @@
+{
+  "name": "mpf-extractor",
+  "version": "1.0.0",
+  "description": "Extracts images stored in images based on the MPF format",
+  "main": "MPFExtractor.js",
+  "repository": "https://github.com/hsnilsson/MPFExtractor.git",
+  "author": "henrik@hsnilsson.com",
+  "license": "MIT"
+}
