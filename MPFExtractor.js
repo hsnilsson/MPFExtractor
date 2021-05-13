@@ -1,4 +1,4 @@
-(function() {
+(function () {
   "use strict";
 
   /*
@@ -15,7 +15,7 @@
       this.options = {
         debug: false,
         extractFII: false, // Normally don't extract the First Individual Image, i.e. the "original" image.
-        extractNonFII: true
+        extractNonFII: true,
       };
     }
 
@@ -48,7 +48,9 @@
           }
           if (dataView.getUint8(offset) != 0xff) {
             reject(
-              `Not a valid marker at offset 0x${offset.toString(16)}, found: 0x${dataView.getUint8(offset).toString(16)}`
+              `Not a valid marker at offset 0x${offset.toString(
+                16
+              )}, found: 0x${dataView.getUint8(offset).toString(16)}`
             );
             return;
           }
@@ -101,7 +103,10 @@
 
               // 32 bit number stating the offset from the start of the 8 Byte MP Header
               // to MP Index IFD Least possible value is thus 8 (means 0 offset)
-              const firstIFDOffset = dataView.getUint32(tiffOffset + 4, !bigEnd);
+              const firstIFDOffset = dataView.getUint32(
+                tiffOffset + 4,
+                !bigEnd
+              );
 
               if (firstIFDOffset < 0x00000008) {
                 reject("Not valid TIFF data! (First offset less than 8)");
@@ -119,7 +124,11 @@
               // Extract info from MPEntries (starting after Count)
               let entriesStart = dirStart + 2,
                 numberOfImages = 0;
-              for (let i = entriesStart; i < entriesStart + 12 * count; i += 12) {
+              for (
+                let i = entriesStart;
+                i < entriesStart + 12 * count;
+                i += 12
+              ) {
                 // Each entry is 12 Bytes long
                 // Check MP Index IFD tags, here we only take tag 0xb001 = Number of images
                 if (dataView.getUint16(i, !bigEnd) == 0xb001) {
@@ -132,7 +141,11 @@
                 MPImageListValPt = dirStart + 2 + count * 12 + nextIFDOffsetLen,
                 images = [];
 
-              for (let i = MPImageListValPt; i < MPImageListValPt + numberOfImages * 16; i += 16) {
+              for (
+                let i = MPImageListValPt;
+                i < MPImageListValPt + numberOfImages * 16;
+                i += 16
+              ) {
                 const image = {};
 
                 image.MPType = dataView.getUint32(i, !bigEnd);
@@ -161,13 +174,17 @@
                   if (image.isFII && !this.options.extractFII) {
                     continue; // Skip FII
                   }
-                  const imageBlob = bufferBlob.slice(image.start, image.end + 1, {
-                      type: "image/jpeg"
-                    }),
+                  const imageBlob = bufferBlob.slice(
+                      image.start,
+                      image.end + 1,
+                      {
+                        type: "image/jpeg",
+                      }
+                    ),
                     imageUrl = URL.createObjectURL(imageBlob);
                   image.img = document.createElement("img");
                   image.img.src = imageUrl;
-  
+
                   imgs.push(image.img);
                 }
                 resolve(imgs);

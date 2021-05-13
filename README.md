@@ -16,7 +16,6 @@ The images are stored inside an image file as in shown in Figure 1:
 
 <img src="assets/Individual images overview.png">
 
-
 ## Usage
 
 Include MPFExtractor.js in your html file or import as a module.
@@ -28,6 +27,7 @@ As below, create an `extractor`, set options if needed, and call `extractor.extr
 `extract()` returns a promise which will resolve to an array of [img elements](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img) or reject with an error message.
 
 ### Example
+
 ```javascript
   const extractor = new MPFExtractor();
   const options = {
@@ -51,7 +51,9 @@ As below, create an `extractor`, set options if needed, and call `extractor.extr
 ```
 
 ## Contributing
+
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## License
+
 [MIT](https://opensource.org/licenses/MIT)
