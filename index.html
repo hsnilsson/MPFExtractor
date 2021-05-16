@@ -255,6 +255,7 @@
 
       function init() {
         const query = document.querySelector.bind(document);
+        const imagesElem = query("#images");
 
         // MPFExtractor (Multi Picture Format Extractor)
         const extractor = new MPFExtractor();
@@ -271,13 +272,13 @@
             return extractor.extract(buffer, options);
           })
           .then((subImageArray) => {
-            query("#images").innerHTML = "";
+            imagesElem.innerHTML = "";
             setImages(subImageArray);
           })
           .catch(setError);
 
         function onUpload(e) {
-          query("#images").innerHTML = "";
+          imagesElem.innerHTML = "";
           for (const file of e.target.files) {
             let reader = new FileReader();
             reader.onload = () =>
@@ -290,7 +291,6 @@
         }
 
         function setImages(images) {
-          const imagesElem = query("#images");
           for (const img of images.reverse()) {
             imagesElem.insertBefore(img, imagesElem.firstChild);
             img.onload = () => (img.style.opacity = 1);
@@ -307,7 +307,7 @@
         }
 
         query("#imageUpload").addEventListener("change", onUpload, false);
-        query("#images").addEventListener(
+        imagesElem.addEventListener(
           "click",
           (e) => {
             query("body").classList.toggle("zen-mode");
