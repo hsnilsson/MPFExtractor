@@ -27,9 +27,15 @@
     />
     <link rel="manifest" href="/site.webmanifest" />
     <style>
+      html {
+        height: 100%;
+      }
+
       body {
         font-family: "Raleway", sans-serif;
         margin: 0;
+        min-height: 100vh;
+        height: 100vh;
       }
 
       header {
@@ -43,7 +49,7 @@
         box-shadow: 35px 38px 84px -23px rgba(0, 0, 0, 0.38);
         opacity: 1;
         transition: all 0.5s ease-in-out;
-        z-index: 1;
+        z-index: 10;
       }
 
       .dashboard {
@@ -73,18 +79,106 @@
         margin-left: 0.5em;
       }
 
-      #images {
-        margin-top: 1em;
+      .demo-area {
+        min-height: 100vh;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
 
-      #images img {
-        opacity: 0;
+      .image-container {
         display: block;
-        position: static;
-        z-index: 0;
-        margin: 1em auto;
+        position: relative;
         width: 80%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .image-container img {
+        position: absolute;
+        max-width: 80%;
         transition: opacity 700ms;
+      }
+
+      .take-off-anim img {
+        border: "1px dashed black";
+        background: #7fffe9;
+        animation: take-off-anim 4s ease-in-out 1;
+        animation-fill-mode: forwards;
+        transform-origin: center center;
+      }
+
+      @keyframes take-off-anim {
+        0% {
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        30% {
+          transform: rotateX(70deg) rotateY(0deg) rotateZ(50deg) scale(0.5);
+        }
+        100% {
+          transform: rotateX(70deg) rotateY(0deg) rotateZ(50deg) scale(0.5);
+        }
+      }
+
+      img.img-2 {
+        animation: take-off-anim 4s ease-in-out 1s,
+          lower-anim-2 5s ease-in-out 2.5s;
+        animation-fill-mode: both;
+      }
+
+      img.img-1 {
+        animation: take-off-anim 4s ease-in-out 1s,
+          lower-anim-1 5s ease-in-out 2.5s;
+        animation-fill-mode: both;
+      }
+
+      img.img-0 {
+        animation: take-off-anim 4s ease-in-out 1s,
+          lower-anim-0 5s ease-in-out 2.5s;
+        animation-fill-mode: both;
+      }
+
+      @keyframes lower-anim-2 {
+        30% {
+          transform: rotateX(70deg) rotateY(0deg) rotateZ(50deg) scale(0.5);
+        }
+        70% {
+          transform: rotateX(70deg) rotateY(0deg) rotateZ(50deg) scale(0.5);
+        }
+        100% {
+          transform: none;
+        }
+      }
+      @keyframes lower-anim-1 {
+        30% {
+          transform: rotateX(70deg) rotateY(0deg) rotateZ(50deg) scale(0.5)
+            translateY(83px) translateZ(-123px) translateX(100px);
+        }
+        70% {
+          transform: rotateX(70deg) rotateY(0deg) rotateZ(50deg) scale(0.5)
+            translateY(83px) translateZ(-123px) translateX(100px);
+        }
+        100% {
+          transform: none;
+        }
+      }
+      @keyframes lower-anim-0 {
+        30% {
+          transform: rotateX(70deg) rotateY(0deg) rotateZ(50deg) scale(0.5)
+            translateY(83px) translateZ(-281px) translateX(100px);
+        }
+        70% {
+          transform: rotateX(70deg) rotateY(0deg) rotateZ(50deg) scale(0.5)
+            translateY(83px) translateZ(-281px) translateX(100px);
+        }
+        100% {
+          transform: none;
+        }
       }
 
       .add-button-large {
@@ -231,9 +325,11 @@
         </a>
       </div>
     </header>
-    <div id="images">
-      <img id="samplePhoto" src="assets/340_AppleiPhoneXSMax_IMG_E7156.jpg" />
-    </div>
+    <section class="demo-area">
+      <div class="image-container">
+        <img id="samplePhoto" src="assets/340_AppleiPhoneXSMax_IMG_E7156.jpg" />
+      </div>
+    </section>
     <div class="error"></div>
     <label for="imageUpload" class="add-button-small">
       <input
@@ -247,15 +343,11 @@
     <script type="text/javascript">
       "use strict";
 
-      window.addEventListener("load", callInit);
-
-      function callInit() {
-        setTimeout(init, 0);
-      }
+      window.addEventListener("load", init());
 
       function init() {
         const query = document.querySelector.bind(document);
-        const imagesElem = query("#images");
+        const imageContainer = query(".image-container");
 
         // MPFExtractor (Multi Picture Format Extractor)
         const extractor = new MPFExtractor();
@@ -265,20 +357,21 @@
         };
 
         // For img tags, js cannot immediately access binary data for security reasons.
-        // We have to re-fetch it. However, it will be served from browser cache.
+        // We have to re-fetch it. However, it should be served from browser cache.
         fetch(query("#samplePhoto").src)
           .then((response) => response.arrayBuffer())
           .then((buffer) => {
             return extractor.extract(buffer, options);
           })
           .then((subImageArray) => {
-            imagesElem.innerHTML = "";
+            imageContainer.innerHTML = "";
             setImages(subImageArray);
+            // imageContainer.classList.add("take-off-anim");
           })
           .catch(setError);
 
         function onUpload(e) {
-          imagesElem.innerHTML = "";
+          imageContainer.innerHTML = "";
           for (const file of e.target.files) {
             let reader = new FileReader();
             reader.onload = () =>
@@ -291,10 +384,15 @@
         }
 
         function setImages(images) {
-          for (const img of images.reverse()) {
-            imagesElem.insertBefore(img, imagesElem.firstChild);
-            img.onload = () => (img.style.opacity = 1);
+          for (const [i, img] of images.reverse().entries()) {
+            img.onload = () => {
+              img.style.opacity = 1;
+              img.style.zIndex = i;
+              img.setAttribute("class", "img-" + i);
+            };
+            imageContainer.insertBefore(img, imageContainer.firstChild);
           }
+          imageContainer.classList.add("take-off-anim");
         }
 
         function setError(message) {
@@ -307,7 +405,7 @@
         }
 
         query("#imageUpload").addEventListener("change", onUpload, false);
-        imagesElem.addEventListener(
+        query(".demo-area").addEventListener(
           "click",
           (e) => {
             query("body").classList.toggle("zen-mode");
