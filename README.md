@@ -10,7 +10,7 @@ Hopefully still hosted on [hsnilsson.com/mpfextractor/](https://hsnilsson.com/mp
 
 For example iPhone 8 Plus, X, and XSMax stores depth information in portrait/bokeh mode as grayscale images called depthmaps inside the original image files. What gives? Well, especially depthmaps can be fun because those can also be used to view a photo in 3D!
 
-So if you have the depthmap, how can you view the photo in 3D? Try upload one along the original image on Facebook and it'll automatically convert it to a 3D photo! Or try it out in [depthy.me](http://depthy.me)!
+So if you have the depthmap, how can you view the photo in 3D? Try upload one along the original image on Facebook and it'll automatically convert it to a 3D photo! Or try it out in [depthy.me](http://depthy.stamina.pl/#/)!
 
 The images are stored inside an image file as in shown in Figure 1:
 
